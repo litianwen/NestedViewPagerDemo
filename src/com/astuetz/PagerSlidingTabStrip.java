@@ -36,10 +36,10 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,7 +57,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	 * 
 	 */
 	public interface ViewTabProvider {
-		public ViewGroup getTabView(int position);
+		public View getTabView(int position);
 	}
 
 	// @formatter:off
@@ -250,6 +250,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 				addIconTab(i,
 						((IconTabProvider) pager.getAdapter())
 								.getPageIconResId(i));
+			} else if (pager.getAdapter() instanceof ViewTabProvider) {
+				// 如果ViewPager的Adapter实现了ViewTabProvider则添加TabView
+				addViewTab(i,
+						((ViewTabProvider) pager.getAdapter()).getTabView(i));
 			} else {
 				addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
 			}
@@ -282,21 +286,19 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	}
 
 	private void addTextTab(final int position, String title) {
-
 		TextView tab = new TextView(getContext());
 		tab.setText(title);
 		tab.setGravity(Gravity.CENTER);
 		tab.setSingleLine();
+
 		addTab(position, tab);
 	}
 
 	private void addIconTab(final int position, int resId) {
-
 		ImageButton tab = new ImageButton(getContext());
 		tab.setImageResource(resId);
 
 		addTab(position, tab);
-
 	}
 
 	/**
@@ -305,7 +307,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	 * @param position
 	 * @param tabView
 	 */
-	private void addViewTab(final int position, ViewGroup tabView) {
+	private void addViewTab(final int position, View tabView) {
 		addTab(position, tabView);
 	}
 
@@ -352,6 +354,15 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 				}
 				if (i == selectedPosition) {
 					tab.setTextColor(selectedTabTextColor);
+				}
+			} else if (v instanceof ImageView) {
+				// 如果是单个图片的话,走这个逻辑
+			} else {
+				// 如果是混合View或者自定义View的话,走这个逻辑
+				if (i == selectedPosition) {
+					v.setSelected(true);
+				} else {
+					v.setSelected(false);
 				}
 			}
 		}

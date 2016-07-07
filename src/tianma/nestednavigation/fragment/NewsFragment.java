@@ -6,6 +6,8 @@ import java.util.List;
 import com.astuetz.PagerSlidingTabStrip;
 
 import tianma.nestednavigation.R;
+import tianma.nestednavigation.fragment.adapter.FragmentInfo;
+import tianma.nestednavigation.fragment.adapter.FragmentPageAdapter;
 import tianma.nestednavigation.fragment.news.AutoMobileFragment;
 import tianma.nestednavigation.fragment.news.EntertainmentFragment;
 import tianma.nestednavigation.fragment.news.FashionFragment;
@@ -13,6 +15,7 @@ import tianma.nestednavigation.fragment.news.HeadlinesFragment;
 import tianma.nestednavigation.fragment.news.SportsFragment;
 import tianma.nestednavigation.fragment.news.TechnologyFragment;
 import android.R.color;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -67,6 +70,7 @@ public class NewsFragment extends Fragment {
 		mPagerAdapter = new FragmentPageAdapter(fm, infos);
 	}
 
+	@SuppressLint("InflateParams")
 	@Override
 	@Nullable
 	public View onCreateView(LayoutInflater inflater,

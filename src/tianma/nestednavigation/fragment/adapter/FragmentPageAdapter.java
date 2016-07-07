@@ -1,7 +1,8 @@
-package tianma.nestednavigation.fragment;
+package tianma.nestednavigation.fragment.adapter;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

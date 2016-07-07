@@ -1,4 +1,4 @@
-package tianma.nestednavigation.fragment;
+package tianma.nestednavigation.fragment.adapter;
 
 import android.support.v4.app.Fragment;
 
